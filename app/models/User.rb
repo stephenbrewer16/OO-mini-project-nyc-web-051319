@@ -45,4 +45,39 @@ class User
     end
   end
 
+  def top_three_recipes
+    highest_rating = recipe_cards.sort_by do |card|
+      card.rating
+    end
+    best_recipes = highest_rating.map do |card|
+      card.recipe
+    end.reverse[0..2]
+  end
+
+  def most_recent_recipe
+    recipe_cards.sort_by do |card|
+      card.date
+    end[0]
+  end
+
+  def safe_recipes
+    problems = Allergy.all.map do |allergy|
+      allergy.ingredient
+    end
+
+    safe = []
+    RecipeCard.all.each do |card|
+      card.recipe.ingredient.each do |ingredient|
+        unless problems.include?(ingredient)
+          safe << ingredient
+        end
+      end
+    end
+      binding.pry
+    if problems.include?(card.ingredient)
+      card.ingredient
+    end
+    safe
+    # binding.pry
+  end
 end

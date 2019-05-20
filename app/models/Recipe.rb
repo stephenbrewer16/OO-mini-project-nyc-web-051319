@@ -1,5 +1,5 @@
 class Recipe
-  attr_accessor :name
+  attr_accessor :name, :ingredient
   @@all = []
 
   def initialize(name)
@@ -33,19 +33,26 @@ class Recipe
 
   def add_ingredients(array)
     array.each do |supplies|
+      RecipeIngredient.new(supplies, self)
       @ingredient << supplies
     end
   end
 
-  # def allergens
-  #   ingredients.all.select do |ingredient|
-  #
-  #
-  #
-  # def self.most_popular
-  #   max_card = RecipeCard.all.max_by do |card|
-  #     card.size
-  #   end
-  #   max_card.recipe
-  # end
+  def allergens
+    problems = []
+    Allergy.all.select do |allergen|
+      if @ingredient.include?(allergen.ingredient)
+        problems << allergen.ingredient
+      end
+    end
+    problems
+  end
+
+  def self.most_popular
+    max_card = RecipeCard.all.max_by do |card|
+      card.recipe.recipe_cards.count
+    end
+    max_card.recipe
+  end
+
 end

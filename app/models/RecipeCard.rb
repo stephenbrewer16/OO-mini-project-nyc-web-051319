@@ -1,10 +1,12 @@
+require 'date'
+
 class RecipeCard
   attr_accessor :recipe, :date, :rating, :user, :ingredient
   @@all = []
 
-  def initialize(recipe, date, rating, user)
+  def initialize(recipe, rating, user)
     @recipe = recipe
-    @date = date
+    @date = Time.now.strftime("%F %H:%M:%S")
     @rating = rating
     @user = user
 

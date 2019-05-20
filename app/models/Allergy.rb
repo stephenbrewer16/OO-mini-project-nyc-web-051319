@@ -5,6 +5,7 @@ class Allergy
   def initialize(ingredient, user)
     @ingredient = ingredient
     @user = user
+    @@all << self
   end
 
   def self.all
